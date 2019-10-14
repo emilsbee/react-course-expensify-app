@@ -5,25 +5,21 @@ import { connect } from 'react-redux'
 import numeral from 'numeral'
 
 
-export const ExpenseSummary = ({ expenses, filters }) => {
-    const visibleExpenses = selectExpenses(expenses, filters)
-    const totalExpenses = expensesTotal(visibleExpenses)
+export const ExpenseSummary = ({ expensesCount, expensesTotal }) => {
+    const expenseWord = expensesCount === 1 ? 'expense' : 'expenses'
+    const formattedTotal = numeral(expensesTotal / 100).format('$0,0.00')
 
     return (
         <div>
-        {visibleExpenses.length === 1 ? 
-        <p>Viewing {visibleExpenses.length} expense totalling {numeral(totalExpenses / 100).format('$0,0.00')}</p>
-        :
-        <p>Viewing {visibleExpenses.length} expenses totalling {numeral(totalExpenses / 100).format('$0,0.00')} </p>
-        }
-    </div>
+            <h1>Viewing {expensesCount} {expenseWord} totalling {formattedTotal}</h1>
+        </div>
     )
 }
 
 const mapStateToProps = (state) => {
     return {
-        expenses: state.expenses,
-        filters: state.filters
+        expensesCount: selectExpenses(state.expenses, state.filters).length,
+        expensesTotal: expensesTotal(state.expenses)
     }
 }
 
