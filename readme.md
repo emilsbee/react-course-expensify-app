@@ -7,4 +7,4 @@ git commit - Creates a new commit with files from staging area
 git log - View recent commits
 
 
-write test cases for auth.js/reducers and auth.js/actions 
+Reinstall npm to get package.json
